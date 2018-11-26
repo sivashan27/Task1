@@ -1,0 +1,78 @@
+﻿@model Task1.Data.EmployeeAddress
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2></h2>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //validation implementation will go here.
+        $('#frmAddress').validate({
+            rules: {
+                Address1: { required: true },
+                PostalCode: { required: true }
+            },
+            messages: {
+                Address1: {
+                    required: "Address is required."
+                },
+                PostalCode: {
+                    required: "PostalCode is required."
+                }
+            }
+        });
+    });
+</script>
+<div class="panel panel-primary">
+    <div class="panel-heading">New Address</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Create", "EmployeeAddresses", FormMethod.Post, new { id = "frmAddress" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control", placeholder = "Address1" } })
+                        @Html.ValidationMessageFor(model => model.Address1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", placeholder = "Address2" } })
+                        @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", placeholder = "City" } })
+                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Postal Code" } })
+                        @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-primary" /> @Html.ActionLink("Cancel ", "Index", "EmployeeAddresses", new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
